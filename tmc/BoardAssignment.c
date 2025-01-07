@@ -8,11 +8,8 @@
 
 
 #include "hal/derivative.h"
-#include "hal/HAL.h"
-
 #include "TMCL.h"
 #include "IdDetection.h"
-#include "EEPROM.h"
 #include "BoardAssignment.h"
 
 static uint8_t assignCh1(uint8_t id, uint8_t justCheck);
@@ -153,26 +150,27 @@ static uint8_t assignCh2(uint8_t id, uint8_t justCheck)
 // This also handles special case logic for the motion controller + driver chain (different pins etc.)
 static void hookDriverSPI(IdAssignmentTypeDef *ids)
 {
-	if(ids->ch1.id == ID_TMC4361A)
-	{
-		// Redirect ch2 SPI to the SPI cover function of the TMC43XX Board
-		HAL.SPI->ch2.readWrite = Evalboards.ch1.cover;
-//		Evalboards.ch1.config->state        = CONFIG_RESET;
-		if(ids->ch2.id == ID_TMC2660)
-		{
-			// TMC2660: Disable the continuous mode via userFunction
-			int32_t value = 1;
-			Evalboards.ch2.userFunction(0, 0, &value);
-		}
-		else if(ids->ch2.id == ID_TMC2130)
-		{
-			Evalboards.ch2.userFunction(6, 0, NULL);
-		}
-		else if((ids->ch2.id == ID_TMC2160) || (ids->ch2.id == ID_TMC2262))
-		{
-			Evalboards.ch1.config->reset();
-		}
-	}
+//	if(ids->ch1.id == ID_TMC4361A)
+//	{
+//		// Redirect ch2 SPI to the SPI cover function of the TMC43XX Board
+//		HAL.SPI->ch2.readWrite = Evalboards.ch1.cover;
+////		Evalboards.ch1.config->state        = CONFIG_RESET;
+//		if(ids->ch2.id == ID_TMC2660)
+//		{
+//			// TMC2660: Disable the continuous mode via userFunction
+//			int32_t value = 1;
+//			Evalboards.ch2.userFunction(0, 0, &value);
+//		}
+//		else if(ids->ch2.id == ID_TMC2130)
+//		{
+//			Evalboards.ch2.userFunction(6, 0, NULL);
+//		}
+//		else if((ids->ch2.id == ID_TMC2160) || (ids->ch2.id == ID_TMC2262))
+//		{
+//			Evalboards.ch1.config->reset();
+//		}
+//	}
+	(void)ids;
 }
 
 static void unassign(IdAssignmentTypeDef *ids)

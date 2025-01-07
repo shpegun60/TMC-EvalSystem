@@ -105,12 +105,10 @@
 #define TMCL_Boot                    242
 #define TMCL_SoftwareReset           255
 
-#if defined(Landungsbruecke) || defined(LandungsbrueckeSmall) || defined(LandungsbrueckeV3)
-    struct BootloaderConfig {
-        uint32_t BLMagic;
-        uint32_t drvEnableResetValue;
-    };
-#endif
+struct BootloaderConfig {
+	uint32_t BLMagic;
+	uint32_t drvEnableResetValue;
+};
 
 // TMCL request
 typedef struct

@@ -96,48 +96,44 @@ int32_t Board_supported(IdAssignmentTypeDef *ids);  // ids and states of support
 
 #define TM01       1414332417
 // init() functions for all boards - function definitions are in the respective _eval file of a chip
-extern void MAX22216_init();
-extern void MAX22204_init();
-extern void MAX22210_init();
-extern void TMC2100_init();
-extern void TMC2130_init();
-extern void TMC2160_init();
-extern void TMC2208_init();
-extern void TMC2209_init();
-extern void TMC2210_init();
-extern void TMC2224_init();
-extern void TMC2225_init();
-extern void TMC2226_init();
-extern void TMC2240_init();
-extern void TMC2300_init();
-extern void TMC2660_init();
-extern void TMC4361A_init();
+//extern void MAX22216_init();
+//extern void MAX22204_init();
+//extern void MAX22210_init();
+//extern void TMC2100_init();
+//extern void TMC2130_init();
+//extern void TMC2160_init();
+//extern void TMC2208_init();
+//extern void TMC2209_init();
+//extern void TMC2210_init();
+//extern void TMC2224_init();
+//extern void TMC2225_init();
+//extern void TMC2226_init();
+//extern void TMC2240_init();
+//extern void TMC2300_init();
+//extern void TMC2660_init();
+//extern void TMC4361A_init();
 extern void TMC4671_init();
-extern void TMC5031_init();
-extern void TMC5041_init();
-extern void TMC5062_init();
-extern void TMC5072_init();
-extern void TMC5130_init();
-extern void TMC5160_init();
-extern void TMC5240_init();
-extern void TMC5271_init();
-extern void TMC5272_init();
-extern void TMC5262_init();
+//extern void TMC5031_init();
+//extern void TMC5041_init();
+//extern void TMC5062_init();
+//extern void TMC5072_init();
+//extern void TMC5130_init();
+//extern void TMC5160_init();
+//extern void TMC5240_init();
+//extern void TMC5271_init();
+//extern void TMC5272_init();
+//extern void TMC5262_init();
 extern void TMC6100_init();
 extern void TMC6100_BOB_init();
-extern void TMC6140_init();
-extern void TMC6200_init();
-extern void TMC6300_init();
-extern void TMC7300_init();
-extern void TMC8100_init();
-extern void TMC2262_init();
-extern void TMC9660_3PH_init();
-extern void TMC9660_STEPPER_init();
+//extern void TMC6140_init();
+//extern void TMC6200_init();
+//extern void TMC6300_init();
+//extern void TMC7300_init();
+//extern void TMC8100_init();
+//extern void TMC2262_init();
+//extern void TMC9660_3PH_init();
+//extern void TMC9660_STEPPER_init();
 extern void SelfTest_init();
-
-#if defined(LandungsbrueckeV3)
-	extern void PD8_IRQHandler();
-#endif
 
 typedef struct {
 	uint16_t id;
@@ -146,53 +142,53 @@ typedef struct {
 
 static const init_assignment init_ch1[] =
 {
-	{ .id = ID_TMC5031,     .init = TMC5031_init     },
-	{ .id = ID_TMC5130,     .init = TMC5130_init     },
-	{ .id = ID_TMC5041,     .init = TMC5041_init     },
-	{ .id = ID_TMC5072,     .init = TMC5072_init     },
-	{ .id = ID_TMC4361A,    .init = TMC4361A_init    },
+//	{ .id = ID_TMC5031,     .init = TMC5031_init     },
+//	{ .id = ID_TMC5130,     .init = TMC5130_init     },
+//	{ .id = ID_TMC5041,     .init = TMC5041_init     },
+//	{ .id = ID_TMC5072,     .init = TMC5072_init     },
+//	{ .id = ID_TMC4361A,    .init = TMC4361A_init    },
 	{ .id = ID_TMC4671,     .init = TMC4671_init     },
-	{ .id = ID_TMC5160,     .init = TMC5160_init     },
-	{ .id = ID_TMC5240,     .init = TMC5240_init     },
-	{ .id = ID_TMC5271,     .init = TMC5271_init     },
-	{ .id = ID_TMC5272,     .init = TMC5272_init     },
-	{ .id = ID_TMC5062,     .init = TMC5062_init     },
-    { .id = ID_TMC5262,     .init = TMC5262_init     },
-    { .id = ID_TMC9660_3PH_BL_EVAL,     .init = TMC9660_3PH_init     },
-    { .id = ID_TMC9660_3PH_REG_EVAL,    .init = TMC9660_3PH_init     },
-    { .id = ID_TMC9660_3PH_PARAM_EVAL,  .init = TMC9660_3PH_init     },
-    { .id = ID_TMC9660_STEPPER_BL_EVAL, .init = TMC9660_STEPPER_init },
-    { .id = ID_TMC9660_STEPPER_REG_EVAL, .init = TMC9660_STEPPER_init },
-    { .id = ID_TMC9660_STEPPER_PARAM_EVAL, .init = TMC9660_STEPPER_init },
+//	{ .id = ID_TMC5160,     .init = TMC5160_init     },
+//	{ .id = ID_TMC5240,     .init = TMC5240_init     },
+//	{ .id = ID_TMC5271,     .init = TMC5271_init     },
+//	{ .id = ID_TMC5272,     .init = TMC5272_init     },
+//	{ .id = ID_TMC5062,     .init = TMC5062_init     },
+//    { .id = ID_TMC5262,     .init = TMC5262_init     },
+//    { .id = ID_TMC9660_3PH_BL_EVAL,     .init = TMC9660_3PH_init     },
+//    { .id = ID_TMC9660_3PH_REG_EVAL,    .init = TMC9660_3PH_init     },
+//    { .id = ID_TMC9660_3PH_PARAM_EVAL,  .init = TMC9660_3PH_init     },
+//    { .id = ID_TMC9660_STEPPER_BL_EVAL, .init = TMC9660_STEPPER_init },
+//    { .id = ID_TMC9660_STEPPER_REG_EVAL, .init = TMC9660_STEPPER_init },
+//    { .id = ID_TMC9660_STEPPER_PARAM_EVAL, .init = TMC9660_STEPPER_init },
 	{ .id = ID_SELFTEST,    .init = SelfTest_init    }
 };
 
 static const init_assignment init_ch2[] =
 {
-	{ .id = ID_TMC2660,       .init = TMC2660_init     },
-	{ .id = ID_TMC2130,       .init = TMC2130_init     },
-	{ .id = ID_TMC2100,       .init = TMC2100_init     },
-	{ .id = ID_TMC2208,       .init = TMC2208_init     },
-	{ .id = ID_TMC2224,       .init = TMC2224_init     },
-	{ .id = ID_TMC2240,       .init = TMC2240_init     },
+//	{ .id = ID_TMC2660,       .init = TMC2660_init     },
+//	{ .id = ID_TMC2130,       .init = TMC2130_init     },
+//	{ .id = ID_TMC2100,       .init = TMC2100_init     },
+//	{ .id = ID_TMC2208,       .init = TMC2208_init     },
+//	{ .id = ID_TMC2224,       .init = TMC2224_init     },
+//	{ .id = ID_TMC2240,       .init = TMC2240_init     },
 	{ .id = ID_TMC6100,       .init = TMC6100_init     },
 	{ .id = ID_TMC6100_BOB,   .init = TMC6100_BOB_init },
-	{ .id = ID_TMC6200,       .init = TMC6200_init     },
-	{ .id = ID_TMC7300,       .init = TMC7300_init     },
-	{ .id = ID_TMC2160,       .init = TMC2160_init     },
-	{ .id = ID_TMC2210,       .init = TMC2210_init     },
-	{ .id = ID_MAX22216_EVAL, .init = MAX22216_init    },
-	{ .id = ID_MAX22216_BOB,  .init = MAX22216_init    },
-	{ .id = ID_MAX22204_EVAL, .init = MAX22204_init    },
-	{ .id = ID_MAX22210_EVAL, .init = MAX22210_init    },
-	{ .id = ID_TMC2209,     .init = TMC2209_init     },
-	{ .id = ID_TMC2225,     .init = TMC2225_init     },
-	{ .id = ID_TMC2226,     .init = TMC2226_init     },
-	{ .id = ID_TMC2300,     .init = TMC2300_init     },
-	{ .id = ID_TMC6300,     .init = TMC6300_init     },
-	{ .id = ID_TMC6140,     .init = TMC6140_init     },
-	{ .id = ID_TMC8100,     .init = TMC8100_init     },
-	{ .id = ID_TMC2262,     .init = TMC2262_init     },
+//	{ .id = ID_TMC6200,       .init = TMC6200_init     },
+//	{ .id = ID_TMC7300,       .init = TMC7300_init     },
+//	{ .id = ID_TMC2160,       .init = TMC2160_init     },
+//	{ .id = ID_TMC2210,       .init = TMC2210_init     },
+//	{ .id = ID_MAX22216_EVAL, .init = MAX22216_init    },
+//	{ .id = ID_MAX22216_BOB,  .init = MAX22216_init    },
+//	{ .id = ID_MAX22204_EVAL, .init = MAX22204_init    },
+//	{ .id = ID_MAX22210_EVAL, .init = MAX22210_init    },
+//	{ .id = ID_TMC2209,     .init = TMC2209_init     },
+//	{ .id = ID_TMC2225,     .init = TMC2225_init     },
+//	{ .id = ID_TMC2226,     .init = TMC2226_init     },
+//	{ .id = ID_TMC2300,     .init = TMC2300_init     },
+//	{ .id = ID_TMC6300,     .init = TMC6300_init     },
+//	{ .id = ID_TMC6140,     .init = TMC6140_init     },
+//	{ .id = ID_TMC8100,     .init = TMC8100_init     },
+//	{ .id = ID_TMC2262,     .init = TMC2262_init     },
 };
 
 #endif /* BOARD_ASSIGNMENT_H */

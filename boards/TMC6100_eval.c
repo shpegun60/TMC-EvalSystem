@@ -39,32 +39,31 @@ static uint32_t userFunction(uint8_t type, uint8_t motor, int32_t *value);
 static uint8_t reset();
 static void enableDriver(DriverState state);
 
-static SPIChannelTypeDef *TMC6100_SPIChannel;
 IOPinTypeDef *TMC6100_SPIchipSelect = NULL;
 
-void tmc6100_readWriteSPI(uint16_t icID, uint8_t *data, size_t dataLength)
-{
-   UNUSED(icID);
-
-   IOPinTypeDef *tmp = NULL;
-
-   // For the BOB version:
-   // Do not override the CSN in the SPIChannel - this would break the motion controller using SPI1
-   // Instead store the pin in a separate variable
-   if (TMC6100_SPIchipSelect)
-   {
-       // Swap to the TMC6100's CSN
-       tmp = TMC6100_SPIChannel->CSN;
-       TMC6100_SPIChannel->CSN = TMC6100_SPIchipSelect;
-   }
-   TMC6100_SPIChannel->readWriteArray(data, dataLength);
-
-   if (TMC6100_SPIchipSelect)
-   {
-       // Swap back to the original CSN
-       TMC6100_SPIChannel->CSN = tmp;
-   }
-}
+//void tmc6100_readWriteSPI(uint16_t icID, uint8_t *data, size_t dataLength)
+//{
+//   UNUSED(icID);
+//
+//   IOPinTypeDef *tmp = NULL;
+//
+//   // For the BOB version:
+//   // Do not override the CSN in the SPIChannel - this would break the motion controller using SPI1
+//   // Instead store the pin in a separate variable
+//   if (TMC6100_SPIchipSelect)
+//   {
+//       // Swap to the TMC6100's CSN
+//       tmp = TMC6100_SPIChannel->CSN;
+//       TMC6100_SPIChannel->CSN = TMC6100_SPIchipSelect;
+//   }
+//   TMC6100_SPIChannel->readWriteArray(data, dataLength);
+//
+//   if (TMC6100_SPIchipSelect)
+//   {
+//       // Swap back to the original CSN
+//       TMC6100_SPIChannel->CSN = tmp;
+//   }
+//}
 
 typedef struct
 {
@@ -221,17 +220,6 @@ static void enableDriver(DriverState state)
 
 void TMC6100_init(void)
 {
-	TMC6100_SPIChannel = &HAL.SPI->ch2;
-	TMC6100_SPIChannel->CSN = &HAL.IOs->pins->SPI2_CSN0;
-
-#ifdef COMPILE_FOR_TMC4671_TMC6100_BOB
-
-	#if defined(Landungsbruecke) || defined(LandungsbrueckeSmall)
-		TMC6100_SPIChannel->periphery       = SPI1_BASE_PTR;
-	#endif
-
-#endif
-
 	Evalboards.ch2.config->reset        = reset;
 	Evalboards.ch2.config->restore      = restore;
 	Evalboards.ch2.config->state        = CONFIG_RESET;
@@ -286,11 +274,11 @@ void TMC6100_BOB_init(void)
 	// Run the normal init first...
 	TMC6100_init();
 
-	// ...then override the SPI channel to use channel 1
-	TMC6100_SPIChannel = &HAL.SPI->ch1;
-	// Do not override the CSN in the SPIChannel - this would break the motion controller using SPI1
-	// Instead store the pin in a separate variable
-	TMC6100_SPIchipSelect = &HAL.IOs->pins->SPI2_CSN0;
-
-	spi_setFrequency(TMC6100_SPIChannel, 1000000);
+//	// ...then override the SPI channel to use channel 1
+//	TMC6100_SPIChannel = &HAL.SPI->ch1;
+//	// Do not override the CSN in the SPIChannel - this would break the motion controller using SPI1
+//	// Instead store the pin in a separate variable
+//	TMC6100_SPIchipSelect = &HAL.IOs->pins->SPI2_CSN0;
+//
+//	spi_setFrequency(TMC6100_SPIChannel, 1000000);
 }

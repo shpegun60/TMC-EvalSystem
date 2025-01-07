@@ -21,8 +21,6 @@
 	#define ID_STATE_TIMEOUT    5  // id detection failed - board id pulse went high but not low
 	#define ID_STATE_NOT_IN_FW  6  // id detection detected a valid id that is not supported in this firmware
 
-	void IDDetection_init(void);
-	void IDDetection_deInit(void);
 	uint8_t IDDetection_detect(IdAssignmentTypeDef *out);
 	void IDDetection_initialScan(IdAssignmentTypeDef *ids);
 

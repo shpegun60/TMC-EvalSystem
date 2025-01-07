@@ -10,17 +10,13 @@
 #include "VitalSignsMonitor.h"
 
 #include "hal/derivative.h"
+#include "hal/tmc_port.h"
+#include "hal/tmc_vm.h"
 #include "boards/Board.h"
-#include "hal/HAL.h"
 
 #define VM_MIN_INTERFACE_BOARD  70   // minimum motor supply voltage for system in [100mV]
 #define VM_MAX_INTERFACE_BOARD  700  // maximum motor supply voltage for system in [100mV]
-
-#if defined(Landungsbruecke) || defined(LandungsbrueckeSmall)
-#define VM_FACTOR               713  // ADC reaches limit at VM = 71.3V => VM Factor (in 100mV) = 713
-#elif defined(LandungsbrueckeV3)
 #define VM_FACTOR               735
-#endif
 
 
 // Status LED frequencies
@@ -58,7 +54,7 @@ void heartBeat(uint32_t tick)
 
 	if((tick - lastTick) > VitalSignsMonitor.heartRate)
 	{
-		LED_TOGGLE();
+		TMC_LED_TOGGLE();
 		lastTick = tick;
 	}
 }
@@ -70,7 +66,7 @@ void checkVM()
 	static uint8_t stable = VSM_BROWNOUT_DELAY + 1; // delay value + 1 is the state during normal voltage levels - set here to prevent restore shortly after boot
 	static uint8_t vio_state = 1;
 
-	VM = *HAL.ADCs->VM;              // read ADC value for motor supply VM
+	VM = TMC_GET_VM_ADC();              // read ADC value for motor supply VM
 	VM = (VM*VM_FACTOR)/ADC_VM_RES;  // calculate voltage from ADC value
 
 	VitalSignsMonitor.VM           = VM;  // write to interface
@@ -134,7 +130,7 @@ void vitalsignsmonitor_checkVitalSigns()
 	static uint32_t lastTick = 0;
 	uint32_t tick;
 
-	tick = systick_getTick();
+	tick = HAL_GetTick();//systick_getTick();
 
 	// Check motor supply VM every 10ms
 	if((tick - lastTick) >= 10)
@@ -194,10 +190,11 @@ void vitalsignsmonitor_checkVitalSigns()
 	// set status LED if not in debug mode
 	if(!VitalSignsMonitor.debugMode)
 	{
-		if(VitalSignsMonitor.errors & (~(VSM_BUSY | VSM_BUSY_CH1 | VSM_BUSY_CH2 | VSM_WARNING_CPU_SUPPLY_LOW)))
-			HAL.LEDs->error.on();
-		else
-			HAL.LEDs->error.off();
+		if(VitalSignsMonitor.errors & (~(VSM_BUSY | VSM_BUSY_CH1 | VSM_BUSY_CH2 | VSM_WARNING_CPU_SUPPLY_LOW))) {
+			TMC_LED_ERROR_ON();
+		} else {
+			TMC_LED_ERROR_OFF();
+		}
 
 		if(VitalSignsMonitor.errors & (VSM_BUSY | VSM_BUSY_CH1 | VSM_BUSY_CH2))
 			VitalSignsMonitor.heartRate = VSM_HEARTRATE_FAST;

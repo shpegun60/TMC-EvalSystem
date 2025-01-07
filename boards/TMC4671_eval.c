@@ -10,27 +10,21 @@
 #include "tmc/ic/TMC4671/TMC4671.h"
 #include "tmc/ramp/LinearRamp.h"
 #include "tmc/RAMDebug.h"
-#include "hal/Timer.h"
+
+#include "hal/tmc_port.h"
+#include "hal/tmcl_debug_timer.h"
 
 #define DEFAULT_ICID    0
 
 #define TORQUE_FLUX_MAX 	(int32_t)10000
 #define POSITION_SCALE_MAX  (int32_t)65536
 
-#if defined(Landungsbruecke) || defined(LandungsbrueckeSmall)
-#define TMC4671_RAMDEBUG_TIMER TIMER_CHANNEL_1
-#elif defined(LandungsbrueckeV3)
-#define TMC4671_RAMDEBUG_TIMER TIMER_CHANNEL_2
-#endif
-
-static IOPinTypeDef *PIN_DRV_ENN;
 static ConfigurationTypeDef *TMC4671_config;
-static SPIChannelTypeDef *TMC4671_SPIChannel;
 
 static int32_t MAX_POS_DEVIATION = 0;
 static int32_t MAX_VEL_DEVIATION = 0;
 
-static void timer_overflow(timer_channel channel);
+static void timer_overflow(TIM_HandleTypeDef* const channel);
 
 typedef struct
 {
@@ -73,15 +67,15 @@ static int32_t internalPositionToLinearPosition(int32_t position, int32_t scaler
 static int32_t linearVelocityToInternalVelocity(int32_t velocity, int32_t scaler);
 static int32_t internalVelocityToLinearVelocity(int32_t velocity, int32_t scaler);
 
-// => SPI wrapper
-void tmc4671_readWriteSPI(uint16_t icID, uint8_t *data, size_t dataLength)
-{
-	if (icID == DEFAULT_ICID)
-	{
-		TMC4671_SPIChannel->readWriteArray(data, dataLength);
-	}
-}
-// <= SPI wrapper
+//// => SPI wrapper
+//void tmc4671_readWriteSPI(uint16_t icID, uint8_t *data, size_t dataLength)
+//{
+//	if (icID == DEFAULT_ICID)
+//	{
+//		TMC4671_SPIChannel->readWriteArray(data, dataLength);
+//	}
+//}
+//// <= SPI wrapper
 
 static uint32_t rotate(uint8_t motor, int32_t velocity)
 {
@@ -903,7 +897,7 @@ static void periodicJob(uint32_t actualSystick)
 	}
 }
 
-static void timer_overflow(timer_channel channel)
+static void timer_overflow(TIM_HandleTypeDef* const channel)
 {
     UNUSED(channel);
 	// RAMDebug
@@ -946,15 +940,15 @@ static void enableDriver(DriverState state)
 		state = Evalboards.driverEnable;
 
 	if(state == DRIVER_DISABLE)
-		HAL.IOs->config->setLow(PIN_DRV_ENN);
+		MOTION_CTRL_DISABLE();
 	else if((state == DRIVER_ENABLE) && (Evalboards.driverEnable == DRIVER_ENABLE))
-		HAL.IOs->config->setHigh(PIN_DRV_ENN);
+		MOTION_CTRL_ENABLE();
 }
 
 static void deInit(void)
 {
 	enableDriver(DRIVER_DISABLE);
-	HAL.IOs->config->setLow(PIN_DRV_ENN);
+	MOTION_CTRL_DISABLE();
 };
 
 static uint8_t reset()
@@ -992,17 +986,8 @@ static void checkErrors(uint32_t tick)
 void TMC4671_init(void)
 {
 	// configure ENABLE-PIN for TMC4671
-	PIN_DRV_ENN = &HAL.IOs->pins->DIO0;
-	HAL.IOs->config->toOutput(PIN_DRV_ENN);
-
-	// setting SD_STP (DIO6) and SD_DIR (DIO7) to High-Z
-	HAL.IOs->config->reset(&HAL.IOs->pins->DIO6);
-	HAL.IOs->config->reset(&HAL.IOs->pins->DIO7);
-
+	Evalboards.driverEnable = DRIVER_ENABLE;
 	enableDriver(DRIVER_ENABLE);
-
-	TMC4671_SPIChannel = &HAL.SPI->ch1;
-	TMC4671_SPIChannel->CSN = &HAL.IOs->pins->SPI1_CSN;
 
 	TMC4671_config = Evalboards.ch1.config;
 
@@ -1078,8 +1063,15 @@ void TMC4671_init(void)
 		rampGenerator[motor].acceleration = 2000;
 	}
 
-	Timer.overflow_callback = timer_overflow;
-	Timer.init();
-	Timer.setFrequency(TMC4671_RAMDEBUG_TIMER, 10000);
+
+//	Timer.overflow_callback = timer_overflow;
+//	Timer.init();
+//	Timer.setFrequency(TMC4671_RAMDEBUG_TIMER, 10000);
+//	debug_updateFrequency(10000);
+
+
+	setOverflowCallback(timer_overflow);
+	setDebugFrequency(10000);
 	debug_updateFrequency(10000);
+	debugTimerStart();
 }

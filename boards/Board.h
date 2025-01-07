@@ -14,7 +14,7 @@
 #include "tmc/TMCL.h"
 
 #include "hal/derivative.h"
-#include "hal/HAL.h"
+#include "hal/tmc_gpio.h"
 #include "tmc/VitalSignsMonitor.h"
 
 #include "tmc/ic/TMC2660/TMC2660.h"
@@ -42,6 +42,8 @@ typedef enum {
 	OTP_STATUS_DONE = 2,
 	OTP_STATUS_FAILED = 3
 } OTP_Status;
+
+
 
 // Evalboard channel struct
 typedef struct
