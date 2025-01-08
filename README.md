@@ -1,4 +1,4 @@
-# TMC-EvalSystem Modification By Shpegun60
+# TMC-EvalSystem Modification By Shpegun60 (Port to STM32)
 
 Trinamic Evaluation System ([home page](https://www.analog.com/en/resources/evaluation-hardware-and-software/motor-motion-control-software/landungsbrucke-eval-system.html))
 
