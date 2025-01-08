@@ -9,7 +9,7 @@
 
 extern TIM_HandleTypeDef htim1;
 #define TIMER_INST (&htim1)
-#define TIMER_BASE_CLK 60000000
+#define TIMER_BASE_CLK 64000000
 
 static uint16_t dbg_period_min = 0;
 static float dbg_freq_min = 0.0f;

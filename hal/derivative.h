@@ -17,7 +17,7 @@
  * this choice will therefore not influence the build process.
  */
 #if !defined(Landungsbruecke) && !defined(LandungsbrueckeV3) && !defined(LandungsbrueckeSmall)
-#warning "No Board selected by makefile, defining one for debug purposes"
+//#warning "No Board selected by makefile, defining one for debug purposes"
 //#define Landungsbruecke
 #define LandungsbrueckeV3
 //#define LandungsbrueckeSmall

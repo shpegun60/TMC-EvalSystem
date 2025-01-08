@@ -21,16 +21,19 @@
 #include "VitalSignsMonitor.h"
 #include "TMCL.h"
 
+IdAssignmentTypeDef IdState = { 0 };
 
 // Detect IDs of attached boards - returns true when done
 uint8_t IDDetection_detect(IdAssignmentTypeDef *ids)
 {
 	ids->ch1.id 			= ID_TMC4671;
 	ids->ch1.state 			= ID_STATE_DONE;
+	ids->ch1.detectedBy 	= FOUND_BY_EEPROM;
 	IdState.ch1.detectedBy 	= FOUND_BY_EEPROM;
 
 	ids->ch2.id 			= ID_TMC6100_BOB;
 	ids->ch2.state 			= ID_STATE_DONE;
+	ids->ch2.detectedBy 	= FOUND_BY_EEPROM;
 	IdState.ch2.detectedBy 	= FOUND_BY_EEPROM;
 	return true;
 }

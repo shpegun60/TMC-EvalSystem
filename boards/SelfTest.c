@@ -26,7 +26,7 @@ void SelfTest_init()
 
 static void deInit()
 {
-	IDDetection_init();
+	//IDDetection_init();
 	VitalSignsMonitor.debugMode = 0;
 }
 

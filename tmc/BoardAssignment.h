@@ -23,10 +23,10 @@ typedef struct
 	uint8_t state;          // detection state of this board
 	uint8_t id;             // id of board
 	IDFinder detectedBy;  // Holds the method used to detect the ID (Monoflop or EEPROM)
-	uint32_t counter_1;     // Timer cycles elapsed on ID pulse rising edge
-	uint32_t counter_2;     // Timer cycles elapsed on ID pulse falling edge
-	uint32_t timer_1;       // Current timer value on ID pulse rising edge
-	uint32_t timer_2;       // Current timer value on ID pulse falling edge
+//	uint32_t counter_1;     // Timer cycles elapsed on ID pulse rising edge
+//	uint32_t counter_2;     // Timer cycles elapsed on ID pulse falling edge
+//	uint32_t timer_1;       // Current timer value on ID pulse rising edge
+//	uint32_t timer_2;       // Current timer value on ID pulse falling edge
 } IdStateTypeDef;         // interface for id and detection state of a board
 
 typedef struct
